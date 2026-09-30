@@ -17,7 +17,21 @@ spec:
           image: mishmoon/backend:1.2
           ports:
             - containerPort: 8000
+
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
           envFrom:
             - configMapRef:
                 name: backend-config
-
