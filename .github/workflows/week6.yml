@@ -1,0 +1,54 @@
+name: Week 6 CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-deploy-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set image name
+        run: |
+          IMAGE_NAME=$(echo "ghcr.io/${GITHUB_REPOSITORY}/backend" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_NAME=$IMAGE_NAME" >> "$GITHUB_ENV"
+
+      - name: Log in to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build backend image
+        run: |
+          docker build -t "$IMAGE_NAME:${GITHUB_SHA}" ./backend
+
+      - name: Push backend image
+        run: |
+          docker push "$IMAGE_NAME:${GITHUB_SHA}"
+
+      - name: Install OpenShift CLI
+        uses: redhat-actions/oc-installer@v1
+
+      - name: Log in to Rahti
+        run: |
+          oc login --server="${{ secrets.RAHTI_SERVER }}" --token="${{ secrets.RAHTI_TOKEN }}"
+
+      - name: Select Week 6 project
+        run: |
+          oc project cloud-services-week6
+
+      - name: Deploy backend
+        run: |
+          oc set image deployment/backend backend="$IMAGE_NAME:${GITHUB_SHA}" -n cloud-services-week6
+
+      - name: Wait for deployment
+        run: |
+          oc rollout status deployment/backend -n cloud-services-week6 --timeout=180s
