@@ -52,3 +52,5 @@ jobs:
       - name: Wait for deployment
         run: |
           oc rollout status deployment/backend -n cloud-services-week6 --timeout=180s
+
+# Week 6 CI/CD
