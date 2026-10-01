@@ -44,13 +44,21 @@ jobs:
       - name: Select Week 6 project
         run: |
           oc project cloud-services-week6
+      - name: Free CPU for backend rollout
+        run: |
+          oc scale deployment/frontend --replicas=0 -n cloud-services-week6
+          oc rollout status deployment/frontend -n cloud-services-week6 --timeout=120s
 
       - name: Deploy backend
         run: |
           oc set image deployment/backend backend="$IMAGE_NAME:${GITHUB_SHA}" -n cloud-services-week6
 
-      - name: Wait for deployment
+      - name: Wait for backend deployment
         run: |
           oc rollout status deployment/backend -n cloud-services-week6 --timeout=180s
 
-# Week 6 CI/CD - retry
+      - name: Restore frontend
+        if: always()
+        run: |
+          oc scale deployment/frontend --replicas=1 -n cloud-services-week6
+          oc rollout status deployment/frontend -n cloud-services-week6 --timeout=120s
