@@ -53,4 +53,4 @@ jobs:
         run: |
           oc rollout status deployment/backend -n cloud-services-week6 --timeout=180s
 
-# Week 6 CI/CD
+# Week 6 CI/CD - retry
