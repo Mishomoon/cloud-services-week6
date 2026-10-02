@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cloud Services - Week 5</title>
+    <title>Cloud Services - Week 6</title>
 
     <style>
         body {
@@ -21,40 +22,47 @@
             padding: 35px 20px;
         }
 
-        header h1 {
+        header h1,
+        header p,
+        main {
             max-width: 1000px;
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        header h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
             font-size: 32px;
         }
 
         header p {
-            max-width: 1000px;
-            margin: 8px auto 0;
+            margin-top: 0;
             font-size: 17px;
         }
 
         main {
-            max-width: 1000px;
-            margin: 30px auto;
+            margin-top: 30px;
             padding: 0 20px;
         }
 
         section {
-            margin-bottom: 35px;
-            padding-bottom: 25px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
             border-bottom: 1px solid #ddd;
         }
 
         h2 {
             color: #263b55;
-            font-size: 25px;
-            margin-bottom: 15px;
+            font-size: 26px;
+            margin-bottom: 18px;
         }
 
         h3 {
             color: #374b63;
             font-size: 20px;
-            margin-top: 25px;
+            margin-top: 30px;
+            margin-bottom: 12px;
         }
 
         p {
@@ -67,51 +75,79 @@
         }
 
         li {
-            margin-bottom: 7px;
+            margin-bottom: 8px;
         }
 
         code {
             background: #f1f1f1;
             padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        pre {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;
         }
 
         .architecture {
-            margin: 20px 0;
-            padding: 15px;
+            margin: 25px 0;
+            padding: 16px;
             background: #f5f5f5;
             border-left: 4px solid #263b55;
-        }
-
-        img {
-            display: block;
-            width: auto;
-            max-width: 50%;
-            max-height: 100px;
-            margin: 20px 0;
-            border: 1px solid #ccc;
-        }
-
-        .code-screenshot {
-            max-width: 30%;
-            max-height: 320px;
-        }
-
-        .terminal-screenshot {
-            max-width: 90%;
-            max-height: 450px;
-        }
-
-        .caption {
-            color: #666;
-            font-size: 14px;
-            margin-top: -12px;
+            font-weight: bold;
         }
 
         .note {
             margin: 20px 0;
-            padding: 12px 15px;
+            padding: 14px 16px;
             background: #f5f5f5;
             border-left: 4px solid #263b55;
+        }
+
+        .reference {
+            margin-top: 15px;
+            padding: 12px 15px;
+            background: #fafafa;
+            border-left: 3px solid #999;
+            font-size: 14px;
+        }
+
+        .reference a {
+            color: #263b55;
+            word-break: break-word;
+        }
+
+        .github-link {
+            margin: 15px 0;
+            padding: 12px 0;
+            font-size: 17px;
+        }
+
+        .github-link a {
+            color: #263b55;
+            font-weight: bold;
+        }
+
+        figure {
+            margin: 28px 0;
+        }
+
+        img {
+            display: block;
+            max-width: 95%;
+            max-height: 550px;
+            height: auto;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+
+        figcaption {
+            color: #666;
+            font-size: 14px;
+            margin-top: 6px;
         }
 
         footer {
@@ -121,681 +157,935 @@
             max-width: 1000px;
             margin: auto;
         }
-
-        a {
-            color: #263b55;
+    
+        .yaml-screenshots {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
         }
+
+        .workflow-main-screenshot {
+            margin: 20px 0 28px;
+        }
+
+        .workflow-main-screenshot img {
+            width: 70%;
+            max-width: 700px;
+            max-height: 360px;
+            margin: 10px auto;
+            object-fit: contain;
+        }
+
+        .workflow-main-screenshot figcaption {
+            text-align: center;
+        }
+
+        .yaml-screenshots figure {
+            flex: 1 1 32%;
+            min-width: 300px;
+            margin: 0;
+        }
+
+        .yaml-screenshots img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .yaml-screenshots figcaption {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
     </style>
 </head>
 
 <body>
 
 <header>
-    <h1>Cloud Services - Week 5</h1>
-    <p>Identity, Security & the Wider Cloud Ecosystem</p>
+    <h1>Cloud Services - Week 6</h1>
+    <p>CI/CD, DevOps Automation &amp; Observability</p>
 </header>
 
 <main>
 
+<!-- ========================================================= -->
+<!-- 1. INTRODUCTION -->
+<!-- ========================================================= -->
+
 <section>
+
     <h2>1. Introduction</h2>
 
     <p>
-        In Week 5, I continued working with the containerized application
-        from Week 4. The Week 4 application contains an Nginx frontend,
-        a Flask/Gunicorn backend and a MySQL database deployed on CSC Rahti.
+        This documentation presents my Cloud Services Week 6 work.
+        In this week, I worked with CI/CD automation, GitHub Actions,
+        container images, Rahti/OpenShift deployments, health probes
+        and backend logging.
     </p>
 
     <p>
-        The Week 5 work had two parts. In Part A, I answered four questions
-        about SAML and OAuth, YAML and JSON, AI cloud platforms, and open
-        data portals. In Part B, I extended the application by adding Redis
-        as a separate cache component.
+        The main goal was to move part of the application deployment
+        process from manual commands towards an automated CI/CD workflow.
+        I used GitHub Actions to build the backend container image,
+        push it to GitHub Container Registry (GHCR), and update the
+        backend deployment in the Rahti/OpenShift environment.
+    </p>
+
+    <p>
+        I also added and tested liveness and readiness probes for the
+        backend. In addition, the backend produces structured logs that
+        contain information such as the request path, HTTP method,
+        status code and response time.
     </p>
 
     <div class="architecture">
-        Week 4: Frontend (Nginx) → Backend (Flask/Gunicorn) → MySQL
+        GitHub → GitHub Actions → GHCR → Rahti/OpenShift → Backend Deployment
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 2. PART A QUESTIONS -->
+<!-- ========================================================= -->
+
+<section>
+
+    <h2>2. Part A - Questions and Answers</h2>
+
+
+    <!-- QUESTION 1 -->
+
+    <h3>
+        2.1 What is the difference between Continuous Integration,
+        Continuous Delivery and Continuous Deployment?
+    </h3>
+
+    <p>
+        Continuous Integration (CI) means that developers regularly
+        integrate their code changes into a shared repository. When a
+        change is pushed, an automated process can build the application
+        and run tests. The purpose is to find integration problems early,
+        instead of discovering them much later when many changes have
+        already been made.
+    </p>
+
+    <p>
+        Continuous Delivery is the next step. The application is
+        automatically built, tested and prepared so that it is ready
+        to be released. However, the final release can still require
+        a person to decide when the deployment should happen. This gives
+        the development team more control over when a release is made.
+    </p>
+
+    <p>
+        Continuous Deployment goes one step further. When the automated
+        build and required checks are successful, the new version can be
+        deployed automatically to the target environment. There is no
+        separate manual deployment step for every successful change.
+    </p>
+
+    <p>
+        In my Week 6 project, the workflow follows the Continuous
+        Deployment idea. A push to the main branch starts the GitHub
+        Actions workflow. The workflow builds the backend container image,
+        pushes the image to GHCR and updates the backend Deployment in
+        Rahti/OpenShift.
+    </p>
+
+    <p>
+        This automation is useful because the same deployment process can
+        be repeated for future changes. It also reduces the number of
+        manual commands that have to be performed after every change.
+        The container image is tagged using the Git commit SHA, which
+        makes it easier to connect the deployed image with the source
+        code version that produced it.
+    </p>
+
+    <div class="reference">
+        <strong>References:</strong><br>
+
+        GitHub Docs - GitHub Actions Quickstart:<br>
+        <a href="https://docs.github.com/en/actions/writing-workflows/quickstart"
+           target="_blank">
+            https://docs.github.com/en/actions/writing-workflows/quickstart
+        </a>
         <br><br>
-        Week 5: Frontend (Nginx) → Backend (Flask/Gunicorn) → Redis Cache + MySQL
-    </div>
-</section>
 
-<section>
-    <h2>2. Part A - Questions</h2>
-
-    <h3>2.1 What is the difference between SAML and OAuth?</h3>
-
-    <p>
-        SAML and OAuth are both used in systems involving identity and
-        access, but they have different purposes. SAML stands for Security
-        Assertion Markup Language. It is mainly used for authentication and
-        Single Sign-On (SSO). OAuth is mainly an authorization framework.
-        It allows an application to receive permission to access resources
-        from another service without receiving the user's password.
-    </p>
-
-    <p>
-        SAML normally involves an Identity Provider (IdP) and a Service
-        Provider (SP). The Identity Provider verifies the user's identity.
-        After the user logs in, the Identity Provider sends an authentication
-        assertion to the Service Provider. This allows the user to access
-        the service without having a separate login for every application.
-    </p>
-
-    <p>
-        For example, a university could have one central login system.
-        A student could use the same university account to access Moodle,
-        email and other university services. The central identity system
-        can act as the Identity Provider, while the individual applications
-        act as Service Providers. This is a typical SAML/SSO use case.
-    </p>
-
-    <p>
-        OAuth works differently. It is useful when an application needs
-        permission to access information or an API from another service.
-        Instead of giving the application a password, the user authorizes
-        the application and an access token is provided. The token can have
-        limited permissions.
-    </p>
-
-    <p>
-        For example, imagine a calendar application that wants to read a
-        user's calendar. With OAuth, the user can give the calendar
-        application permission to read the calendar. The application receives
-        an access token and uses it to access the permitted data. The
-        user's password is not given to the calendar application.
-    </p>
-
-    <p>
-        OAuth is also commonly seen with services that provide options such
-        as "Sign in with Google" or "Sign in with GitHub". More precisely,
-        OAuth itself is about authorization. OpenID Connect adds an identity
-        layer on top of OAuth when authentication is needed.
-    </p>
-
-    <p>
-        Aa company could use SAML when it wants enterprise
-        Single Sign-On between one identity system and several applications.
-        OAuth is more suitable when an application needs delegated access
-        to another service or its API. The main difference is that SAML
-        commonly communicates authentication information, while OAuth
-        provides delegated authorization.
-    </p>
-
-    <h3>2.2 What is YAML and why is it used in Kubernetes/Rahti? How is it different from JSON?</h3>
-
-    <p>
-        YAML is a human-readable format commonly used for configuration.
-        It uses indentation to describe the structure of data. Kubernetes
-        and Rahti/OpenShift commonly use YAML manifests to describe
-        resources such as Deployments, Services, ConfigMaps and other
-        objects.
-    </p>
-
-    <p>
-        YAML is useful in Kubernetes because a resource can be described
-        in a readable document. The document can contain the resource type,
-        name, labels, replicas, containers, ports and other configuration.
-        Kubernetes reads the manifest and creates or updates the resource
-        in the cluster.
-    </p>
-
-    <p>
-        I used YAML directly in my Week 5 project. I created
-        <strong>redis-deployment.yaml</strong> for the Redis Deployment and
-        <strong>redis-service.yaml</strong> for the Redis Service. This made
-        Redis an independently managed component with its own Deployment
-        and Service.
-    </p>
-
-    <p>
-        YAML and JSON can both represent structured data, but they are
-        written differently. YAML normally uses indentation and fewer
-        brackets. JSON uses curly brackets, square brackets and quotation
-        marks. YAML can also contain comments, which can be useful when
-        humans maintain configuration files.
-    </p>
-
-    <p>
-        YAML can be easier to read when a Kubernetes configuration becomes
-        large. For example, a Deployment may contain labels, selectors,
-        containers, replicas and ports. YAML shows this hierarchy through
-        indentation. JSON can represent the same information, but normally
-        uses more brackets and punctuation.
-    </p>
-
-    <p>
-        A disadvantage of YAML is that indentation is important. During
-        my Week 5 work, I initially had a YAML formatting error when
-        applying the Redis Deployment. After correcting the YAML structure,
-        Rahti accepted the Deployment configuration.
-    </p>
-
-    <p>
-        So, YAML was not only a theory topic in this assignment.
-        I used it as the actual configuration format for the Redis
-        component in Rahti.
-    </p>
-
-    <h3>2.3 Pick two or three AI cloud platforms and compare their offerings.</h3>
-
-    <p>
-        AI cloud platforms provide managed artificial intelligence and
-        machine-learning services. Instead of building and operating all
-        AI infrastructure independently, developers can use cloud APIs,
-        managed models and development tools provided by a cloud platform.
-    </p>
-
-    <p>
-        Three examples are Amazon Web Services (AWS), Microsoft Azure and
-        Google Cloud. All three provide AI services, but they have different
-        products and integrations.
-    </p>
-
-    <p>
-        AWS provides services such as Amazon Bedrock and Amazon SageMaker.
-        Bedrock provides managed access to foundation models, while
-        SageMaker provides tools for developing, training and deploying
-        machine-learning models.
-    </p>
-
-    <p>
-        Microsoft Azure provides services including Azure AI Foundry and
-        Azure OpenAI. Azure also provides AI capabilities for areas such
-        as language, speech and vision.
-    </p>
-
-    <p>
-        Google Cloud provides Vertex AI. It can be used for working with
-        AI models and for developing and deploying machine-learning
-        applications.
-    </p>
-
-    <p>
-        These services could add an AI feature to my Week 4 application.
-        For example, the Nginx frontend could contain a simple chatbot
-        interface. The Flask backend could receive the user's message,
-        send it to an AI cloud service through an API, receive the response
-        and return it to the frontend.
-    </p>
-
-    <p>
-        Another example would be text summarization. A user could send a
-        text through the frontend, the Flask backend could send the text
-        to an AI service, and the result could be returned to the user.
-        API credentials should stay on the backend side and should not be
-        exposed in the frontend.
-    </p>
-
-    <p>
-        The platforms differ in their available models, services, pricing,
-        APIs and integration with their wider cloud ecosystems. The
-        appropriate choice depends on the application's requirements.
-    </p>
-
-    <h3>2.4 What are open data portals and why does the data format matter?</h3>
-
-    <p>
-        Open data portals are websites where governments, public
-        organizations and other institutions publish datasets that people
-        can access and reuse. Examples include Finland's
-        <a href="https://avoindata.fi" target="_blank">avoindata.fi</a> and the European Data Portal.
-    </p>
-
-    <p>
-        Open datasets can contain transport information, weather data,
-        demographic statistics, public spending information, environmental
-        information and many other types of data. Developers can use the
-        datasets to create applications, visualizations and research
-        projects.
-    </p>
-
-    <p>
-        The format matters because it affects how easily software can read
-        and reuse the data. A machine-readable format allows a program to
-        process the dataset automatically instead of requiring a person
-        to copy information manually.
-    </p>
-
-    <p>
-        CSV is useful for tabular information. For example, a dataset
-        containing bus stops and timetable information could be stored
-        as CSV and loaded into Python. JSON is useful for structured data
-        and web applications because it can represent objects, lists and
-        values.
-    </p>
-
-    <p>
-        For example, imagine that a city publishes bus timetable data.
-        If the information is available through a JSON API, a web
-        application can request the latest information automatically and
-        display the next buses. If the information were only available
-        as a scanned PDF, a developer might need to manually extract the
-        information before using it.
-    </p>
-
-    <p>
-        Documentation also matters. A dataset should explain what its
-        fields mean, how often it is updated and what format is being
-        provided. A machine-readable dataset can still be difficult to
-        reuse if its structure is not documented.
-    </p>
-
-    <p>
-        A good open data is not only about making information
-        public. It should also be useful, documented and machine-readable
-        so that developers can reuse it in applications.
-    </p>
-</section>
-
-<section>
-    <h2>3. Resources</h2>
-
-    <ul>
-        <li>
-            SAML and OAuth:
-            <a href="https://www.okta.com/identity-101/saml-vs-oauth/" target="_blank">
-                Okta - SAML vs OAuth
-            </a>
-        </li>
-        <li>
-            YAML:
-            <a href="https://yaml.org/" target="_blank">
-                YAML official website
-            </a>
-        </li>
-        <li>
-            Kubernetes:
-            <a href="https://kubernetes.io/docs/home/" target="_blank">
-                Kubernetes documentation
-            </a>
-        </li>
-        <li>
-            Finnish Open Data:
-            <a href="https://www.avoindata.fi/en" target="_blank">
-                avoindata.fi
-            </a>
-        </li>
-        <li>
-            European Open Data:
-            <a href="https://data.europa.eu/en" target="_blank">
-                European Data Portal
-            </a>
-        </li>
-    </ul>
-</section>
-
-<section>
-    <h2>4. Part B - Hands-on: Redis Cache</h2>
-
-    <p>
-        The Week 5 hands-on exercise provided three extension options:
-        Redis Cache, OAuth Login and Public API integration.
-    </p>
-
-    <p>
-        I chose <strong>Option 2 - Add Redis Cache</strong>. The goal was
-        to add Redis as a fourth independently deployed component and use
-        it from the Flask backend for cached data.
-    </p>
-
-    <p>
-        I kept the existing Week 4 Nginx frontend, Flask/Gunicorn backend
-        and MySQL database. Redis was added as a separate Deployment and
-        Service instead of being placed inside the backend container.
-    </p>
-
-    <div class="architecture">
-        Frontend (Nginx) → Backend (Flask/Gunicorn) → Redis Cache
-        <br>
-        Backend (Flask/Gunicorn) → MySQL Database
+        Atlassian - Continuous Integration, Delivery and Deployment:<br>
+        <a href="https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment"
+           target="_blank">
+            https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment
+        </a>
     </div>
 
-    <h3>4.1 Redis Deployment</h3>
+
+    <!-- QUESTION 2 -->
+
+    <h3>
+        2.2 Describe the structure of a GitHub Actions workflow.
+        What would a minimal pipeline for this application need to do?
+    </h3>
 
     <p>
-        I created <strong>redis-deployment.yaml</strong> and deployed Redis
-        as its own Deployment in the Week 5 Rahti project. The Deployment
-        uses the <strong>redis:alpine</strong> image, one replica and
-        port 6379.
-    </p>
-
-
-
-    <img class="code-screenshot"
-         src="screenshots-week5/redis-deployment.png"
-         alt="My actual Redis Deployment YAML">
-
-    <p class="caption">
-        My actual redis-deployment.yaml.
-    </p>
-
-    <h3>4.2 Redis Service</h3>
-
-    <p>
-        I created <strong>redis-service.yaml</strong> as a separate Service.
-        The Service provides internal communication between the Flask
-        backend and the Redis pod. It uses port 6379 and selects the Redis
-        pod with the <strong>app: redis</strong> label.
+        A GitHub Actions workflow is normally written in a YAML file.
+        The workflow describes when the automation starts and which
+        operations should be performed. Three important parts are
+        triggers, jobs and steps.
     </p>
 
     <p>
-        Redis does not need a public Route because it is an internal
-        component used by the backend.
-    </p>
-
-    <img class="code-screenshot"
-         src="screenshots-week5/redis-service.png"
-         alt="My actual Redis Service YAML">
-
-    <p class="caption">
-        My actual redis-service.yaml.
-    </p>
-
-    <h3>4.3 Backend Integration</h3>
-
-    <p>
-        I added the Redis Python package to the backend requirements and
-        configured the Flask backend to connect to the Redis Service.
-        The Redis Service name is <strong>redis</strong>, so the backend
-        can find Redis through the internal Rahti network.
-    </p>
-
-    <img class="code-screenshot"
-         src="screenshots-week5/configmap.yaml.png"
-         alt="My actual Week 5 ConfigMap">
-
-    <p class="caption">
-        My actual Week 5 ConfigMap showing the Redis host configuration.
+        A trigger defines when the workflow starts. For example, a
+        workflow can be triggered when a developer pushes new code to
+        the main branch. A job is a group of work performed by GitHub
+        Actions on a runner. Steps are the individual commands or
+        reusable actions inside the job.
     </p>
 
     <p>
-        The Redis package was added to the backend requirements.
-    </p>
-
-    <img class="code-screenshot"
-         src="screenshots-week5/requirements.txt.png"
-         alt="My actual requirements.txt">
-
-    <p class="caption">
-        My actual requirements.txt showing the Redis dependency.
+        For my application, the minimum pipeline needs to check out the
+        repository, build the backend container image, authenticate with
+        the container registry, push the image to GHCR, authenticate with
+        Rahti/OpenShift and update the backend Deployment.
     </p>
 
     <p>
-        The Flask Redis connection was also implemented in the backend.
-        The actual code is part of my project and is represented by the
-        project screenshots rather than recreated in this documentation.
-    </p>
-
-    <h3>4.4 Deployment Status</h3>
-
-    <p>
-        I checked the Week 5 deployment status in Rahti. The application
-        has separate workloads for the frontend, backend, MySQL and Redis.
-    </p>
-
-    <img src="screenshots-week5/Week%205%20Deployment%20Status.png"
-         alt="Week 5 Deployment Status">
-
-    <p class="caption">
-        Week 5 Deployment and Pod status.
-    </p>
-
-    <h3>4.5 Services</h3>
-
-    <p>
-        I also checked the Services in the Week 5 project. Redis has its
-        own Service on port 6379, alongside the existing application
-        Services.
-    </p>
-
-    <img src="screenshots-week5/week5-services.png"
-         alt="Week 5 Services">
-
-    <p class="caption">
-        Week 5 Services, including the Redis Service.
-    </p>
-
-    <h3>4.6 Redis Deployment in Rahti</h3>
-
-    <p>
-        The following screenshot shows the Redis Deployment running as its
-        own component in Rahti.
-    </p>
-
-    <img src="screenshots-week5/week5-redis-deployment.png"
-         alt="Redis Deployment in Rahti">
-
-    <p class="caption">
-        Redis Deployment in the Week 5 Rahti project.
-    </p>
-
-    <h3>4.7 Visitor Counter Test</h3>
-
-    <p>
-        The visitor counter is included as a functional application test.
-        It shows the visitor-counting functionality used with the
-        application.
-    </p>
-
-    <img src="screenshots-week5/visitor%20count.png"
-         alt="Visitor counter test">
-
-    <p class="caption">
-        Visitor counter test.
-    </p>
-
-    <h3>4.8 Communication Between Components</h3>
-
-    <p>
-        The public user reaches the application through the Rahti Route.
-        The Route sends traffic to the Nginx frontend. The frontend
-        communicates with the Flask/Gunicorn backend through the backend
-        Service.
+        After the deployment is updated, the application should also be
+        checked to make sure that the new pod becomes ready. This is
+        important because successfully building an image does not by
+        itself prove that the application is running correctly in the
+        cluster.
     </p>
 
     <p>
-        The Flask backend is the component that communicates with Redis
-        and MySQL. Redis is reached through the internal Redis Service,
-        while MySQL is reached through the MySQL Service.
+        The workflow used in this project can therefore be represented
+        by the following sequence:
     </p>
 
-    <div class="architecture">
-        User → Rahti Route → Nginx Frontend → Flask/Gunicorn Backend
+    <pre><code>push to main
+    ↓
+checkout repository
+    ↓
+build backend image
+    ↓
+push image to GHCR
+    ↓
+login to Rahti
+    ↓
+oc set image deployment/backend
+    ↓
+new deployment
+    ↓
+check rollout</code></pre>
+
+    <p>
+        The image is tagged using the Git commit SHA. This gives each
+        built image a unique identifier and makes it possible to see
+        which source-code commit produced the deployed container image.
+        This is useful when investigating a deployment or trying to
+        understand which version is currently running.
+    </p>
+
+    <div class="reference">
+        <strong>References:</strong><br>
+
+        GitHub Docs - GitHub Actions Quickstart:<br>
+        <a href="https://docs.github.com/en/actions/writing-workflows/quickstart"
+           target="_blank">
+            https://docs.github.com/en/actions/writing-workflows/quickstart
+        </a>
         <br><br>
-        Flask/Gunicorn Backend → Redis Service
-        <br>
-        Flask/Gunicorn Backend → MySQL Service
+
+        GitHub Docs - Workflow syntax for GitHub Actions:<br>
+        <a href="https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions"
+           target="_blank">
+            https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions
+        </a>
     </div>
 
-    <p>
-        This separation gives each component a clear responsibility.
-        Nginx serves the frontend, Flask handles the application logic,
-        Redis provides temporary cache storage, and MySQL remains the
-        persistent database.
-    </p>
 
-    <h3>4.9 Production Readiness</h3>
+    <!-- QUESTION 3 -->
 
-    <p>
-        Redis can improve performance because frequently used values can
-        be kept in memory instead of repeatedly requesting the same
-        information from the database. This can reduce database workload.
-    </p>
+    <h3>
+        2.3 What is the difference between a liveness probe and a
+        readiness probe?
+    </h3>
 
     <p>
-        Redis should not replace MySQL as the persistent database in this
-        application. Cache data can disappear when Redis is restarted or
-        recreated, so important application data should remain in MySQL.
+        A liveness probe checks whether an application inside a container
+        is still functioning. It helps Kubernetes or OpenShift detect a
+        container that is running but is no longer responding correctly.
+        If the liveness check repeatedly fails, the platform can restart
+        the container so that the application has a chance to recover.
     </p>
 
     <p>
-        A production application also needs a cache invalidation strategy.
-        If a value changes in MySQL, the application needs to decide when
-        the cached value should be updated, deleted or allowed to expire.
-        Otherwise, an old cached value could be returned.
+        A readiness probe has a different purpose. It checks whether the
+        application is ready to receive traffic. A container can be
+        running while the application inside it is still starting or
+        otherwise not ready to serve requests.
     </p>
 
     <p>
-        Availability and monitoring would also be important in a production
-        environment. The current exercise uses one Redis replica because
-        this is a course project. A production system could require a
-        different Redis deployment strategy, monitoring and additional
-        resources.
+        When a readiness probe fails, the pod can remain in the
+        <code>Running</code> state but it is not considered ready.
+        This means that the Service should not send normal traffic to
+        that pod while it is not ready.
     </p>
 
     <p>
-        Redis is kept as an internal Service and is not exposed through a
-        public Route. Credentials and other sensitive information should
-        also be handled securely and should not be committed to GitHub.
-    </p>
-
-    <h3>4.10 Problems and Solutions</h3>
-
-    <h3>Problem 1 - Redis RDB permission error</h3>
-
-    <p>
-        During testing, Redis repeatedly failed to create its temporary RDB
-        file in <strong>/data</strong>. The Redis log showed a permission
-        denied error and background saving failed.
-    </p>
-
-    <img class="terminal-screenshot"
-         src="screenshots-week5/redis-error.png"
-         alt="Actual Redis RDB permission error">
-
-    <p class="caption">
-        Actual Redis error from the Week 5 terminal.
+        In my Week 6 backend Deployment, both probes use the
+        <code>/api/health</code> endpoint on port <code>8000</code>.
+        The liveness probe checks whether the backend is still responding,
+        while the readiness probe checks whether it should receive
+        Service traffic.
     </p>
 
     <p>
-        Because Redis is being used as a temporary cache in this project,
-        I changed the Redis configuration to disable RDB snapshot saving
-        and append-only persistence. This avoids requiring the cache to
-        persist its data to the container filesystem.
-    </p>
-
-    <h3>Problem 2 - Rahti CPU quota</h3>
-
-    <p>
-        When the Redis Deployment was updated, Rahti could not create the
-        replacement Redis pod because the project had already reached its
-        CPU quota. The actual error showed that 4 CPUs were already being
-        used while the new pod requested another 500m CPU.
-    </p>
-
-    <img class="terminal-screenshot"
-         src="screenshots-week5/CPU-quota.png"
-         alt="Actual Rahti CPU quota error">
-
-    <p class="caption">
-        Actual Rahti CPU quota error during Redis Deployment replacement.
+        I also tested the readiness probe deliberately. I changed the
+        readiness path from <code>/api/health</code> to
+        <code>/wrong-health</code>. The backend container continued
+        running, but the new pod became <code>0/1</code> ready.
+        The OpenShift events showed that the readiness probe failed
+        with HTTP status <code>404</code>.
     </p>
 
     <p>
-        The existing Redis pod remained running. This showed that the
-        problem was a cluster resource-quota limitation rather than a
-        problem with the Redis Service itself. It also showed why both
-        application logs and cluster resource information are important
-        when troubleshooting cloud deployments.
+        After the test, I restored the readiness path to
+        <code>/api/health</code>. The deployment then rolled out
+        successfully and the backend returned to the ready state.
+        This test showed the practical difference between a container
+        being Running and a pod being Ready.
     </p>
 
+    <div class="reference">
+        <strong>References:</strong><br>
+
+        Kubernetes Documentation - Liveness, Readiness and Startup Probes:<br>
+        <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+           target="_blank">
+            https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+        </a>
+        <br><br>
+
+        Google SRE Book - Monitoring Distributed Systems:<br>
+        <a href="https://sre.google/sre-book/monitoring-distributed-systems/"
+           target="_blank">
+            https://sre.google/sre-book/monitoring-distributed-systems/
+        </a>
+    </div>
+
+
+    <!-- QUESTION 4 -->
+
+    <h3>
+        2.4 Why should secrets never be hard-coded into a CI/CD pipeline?
+    </h3>
+
+    <p>
+        Secrets such as registry tokens, passwords and cluster login
+        credentials should never be written directly into a CI/CD
+        workflow file. The workflow is stored as part of the project
+        repository, so putting a real credential into the YAML file
+        could expose that credential to people who can access the
+        repository.
+    </p>
+
+    <p>
+        A leaked credential can be especially dangerous when it provides
+        access to a container registry or a Kubernetes/OpenShift cluster.
+        Someone who obtains the credential could potentially push images,
+        access resources or perform actions that were intended only for
+        the deployment system.
+    </p>
+
+    <p>
+        GitHub Actions provides a safer way to handle sensitive values.
+        Secrets can be stored in GitHub repository or environment secrets.
+        The workflow can then reference a secret without placing the
+        actual value directly into the YAML file.
+    </p>
+
+    <p>
+        For example, a workflow can refer to a value using an expression
+        such as <code>secrets.RAHTI_TOKEN</code>. The actual token is kept
+        outside the source code. If the token needs to be changed or
+        revoked, it can be updated in the secret settings without changing
+        the workflow itself.
+    </p>
+
+    <p>
+        In my Week 6 documentation, I do not show any real passwords,
+        registry tokens or Rahti credentials. Only the method of using
+        secrets is described. This keeps sensitive information out of
+        the documentation and source code.
+    </p>
+
+    <div class="reference">
+        <strong>References:</strong><br>
+
+        GitHub Docs - Using secrets in GitHub Actions:<br>
+        <a href="https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions"
+           target="_blank">
+            https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
+        </a>
+        <br><br>
+
+        GitHub Docs - About secrets:<br>
+        <a href="https://docs.github.com/en/actions/security-for-github-actions/security-guides/about-secrets"
+           target="_blank">
+            https://docs.github.com/en/actions/security-for-github-actions/security-guides/about-secrets
+        </a>
+    </div>
 
 </section>
 
+
+<!-- ========================================================= -->
+<!-- 3. CI/CD PIPELINE -->
+<!-- ========================================================= -->
+
 <section>
-    <h2>5. Evidence and Requirements</h2>
+
+    <h2>3. Part B - CI/CD Pipeline</h2>
+
+    <h3>3.1 GitHub Actions workflow</h3>
 
     <p>
-        The Week 5 work demonstrates the required extension of the Week 4
-        application with one new independently deployed component.
+        The GitHub Actions workflow is stored in the repository under
+        <code>.github/workflows/</code>. The workflow is triggered by
+        changes pushed to the main branch.
     </p>
 
-    <ul>
-        <li>Four Part A questions are answered in full sentences with examples.</li>
-        <li>Redis is deployed as its own Deployment.</li>
-        <li>Redis has its own Service.</li>
-        <li>The architecture shows the new Redis component.</li>
-        <li>Deployment and Pod status is shown with a real screenshot.</li>
-        <li>Service status is shown with a real screenshot.</li>
-        <li>The backend-to-Redis communication is explained.</li>
-        <li>Production-readiness considerations are discussed.</li>
-        <li>Real Redis and CPU-quota problems are documented with screenshots.</li>
-        <li>No credentials are included.</li>
-    </ul>
+    <p>
+        The workflow checks out the source code, builds the backend
+        container image, pushes the image to GitHub Container Registry
+        and updates the backend Deployment in the Rahti/OpenShift
+        environment.
+    </p>
+
+    <figure class="workflow-main-screenshot">
+        <img src="screenshots-week6/github-workflow_part2.png"
+             alt="GitHub Actions workflow">
+
+        <figcaption>
+            GitHub Actions workflow used for the Week 6 deployment.
+        </figcaption>
+    </figure>
+
+    <div class="yaml-screenshots">
+        <figure>
+            <img src="screenshots-week6/github-yaml1.png" alt="Week 6 GitHub Actions workflow YAML, first part">
+            <figcaption>Workflow YAML — Part 1</figcaption>
+        </figure>
+
+        <figure>
+            <img src="screenshots-week6/github-yaml2.png" alt="Week 6 GitHub Actions workflow YAML, middle part">
+            <figcaption>Workflow YAML — Part 2</figcaption>
+        </figure>
+
+        <figure>
+            <img src="screenshots-week6/github-yaml3.png" alt="Week 6 GitHub Actions workflow YAML, final part">
+            <figcaption>Workflow YAML — Part 3</figcaption>
+        </figure>
+    </div>
+
+    <h3>3.1.1 Workflow YAML</h3>
+
+    <p>
+        The complete workflow used in this project is shown below. It runs when
+        changes are pushed to the <code>main</code> branch, builds the backend
+        image using the Git commit SHA, pushes it to GHCR and deploys that image
+        to the Week 6 Rahti project. Sensitive values are referenced through
+        GitHub Actions secrets and are not included as real values here.
+    </p>
+
+    <pre><code>name: Week 6 CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-deploy-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set image name
+        run: |
+          IMAGE_NAME=$(echo "ghcr.io/${GITHUB_REPOSITORY}/backend" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_NAME=$IMAGE_NAME" &gt;&gt; "$GITHUB_ENV"
+
+      - name: Log in to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build backend image
+        run: |
+          docker build -t "$IMAGE_NAME:${GITHUB_SHA}" ./backend
+
+      - name: Push backend image
+        run: |
+          docker push "$IMAGE_NAME:${GITHUB_SHA}"
+
+      - name: Install OpenShift CLI
+        uses: redhat-actions/oc-installer@v1
+
+      - name: Log in to Rahti
+        run: |
+          oc login --server="${{ secrets.RAHTI_SERVER }}" --token="${{ secrets.RAHTI_TOKEN }}"
+
+      - name: Select Week 6 project
+        run: |
+          oc project cloud-services-week6
+
+      - name: Free CPU for backend rollout
+        run: |
+          oc scale deployment/frontend --replicas=0 -n cloud-services-week6
+          oc rollout status deployment/frontend -n cloud-services-week6 --timeout=120s
+
+      - name: Deploy backend
+        run: |
+          oc set image deployment/backend backend="$IMAGE_NAME:${GITHUB_SHA}" -n cloud-services-week6
+
+      - name: Wait for backend deployment
+        run: |
+          oc rollout status deployment/backend -n cloud-services-week6 --timeout=180s
+
+      - name: Restore frontend
+        if: always()
+        run: |
+          oc scale deployment/frontend --replicas=1 -n cloud-services-week6
+          oc rollout status deployment/frontend -n cloud-services-week6 --timeout=120s</code></pre>
+
+    <div class="note">
+        <strong>CPU resource limitation:</strong> The Rahti project has a CPU
+        resource limit. During the backend rollout, the workflow temporarily
+        scales the frontend to zero replicas to free CPU resources. After the
+        backend deployment finishes, the workflow restores the frontend to one
+        replica. The trade-off is that the frontend is briefly unavailable
+        during this deployment step.
+    </div>
+
+
+    <h3>3.2 Successful GitHub Actions run</h3>
+
+    <p>
+        The GitHub Actions workflow completed successfully. The successful
+        run provides evidence that the automated workflow was able to
+        execute the required build, container image and deployment steps.
+    </p>
+
+    <p>
+        This is important because the purpose of the CI/CD pipeline is
+        not only to create a container image but also to automate the
+        process of getting the new version into the Rahti environment.
+    </p>
+
+    <figure>
+        <img src="screenshots-week6/github-actions-success.png"
+             alt="Successful GitHub Actions run">
+
+        <figcaption>
+            Successful GitHub Actions run.
+        </figcaption>
+    </figure>
+
+
+    <h3>3.3 Deployment change</h3>
+
+    <p>
+        The backend image is deployed using the Git commit SHA as its image tag.
+        This connects a deployed container image to the exact source-code
+        revision that triggered the workflow. The deployment is then rolled out
+        and the new backend pod must become ready before the deployment is
+        considered successful.
+    </p>
+
+    <p>
+        The successful Actions run and the OpenShift rollout together provide
+        evidence that the change travelled from the Git repository through the
+        automated pipeline to the running application.
+    </p>
+
+    <figure>
+        <img src="screenshots-week6/week6-route-and-image.png"
+             alt="Route and deployed image evidence">
+
+        <figcaption>
+            Deployed application route and image information.
+        </figcaption>
+    </figure>
+
+    <figure>
+        <img src="screenshots-week6/week6-backend-rollout-success.png"
+             alt="Backend rollout successful">
+
+        <figcaption>
+            Backend deployment rollout completed successfully.
+        </figcaption>
+    </figure>
+
 </section>
 
+
+<!-- ========================================================= -->
+<!-- 4. HEALTH CHECKS -->
+<!-- ========================================================= -->
+
 <section>
-    <h2>6. GitHub Repository</h2>
+
+    <h2>4. Part B - Health Checks</h2>
+
+    <h3>4.1 Liveness probe</h3>
 
     <p>
-        My Week 5 project repository is:
+        The backend liveness probe checks the
+        <code>/api/health</code> endpoint on port <code>8000</code>.
+        The purpose is to detect whether the backend container is still
+        functioning and responding to requests.
+    </p>
+
+    <figure>
+        <img src="screenshots-week6/liveness-prob.png"
+             alt="Backend liveness probe configuration">
+
+        <figcaption>
+            Liveness probe configuration.
+        </figcaption>
+    </figure>
+
+
+    <h3>4.2 Readiness probe</h3>
+
+    <p>
+        The backend readiness probe checks the same health endpoint on
+        port <code>8000</code>. The readiness check is used to determine
+        whether the pod is ready to receive traffic through the Service.
+    </p>
+
+    <figure>
+        <img src="screenshots-week6/readiness-prob.png"
+             alt="Backend readiness probe configuration">
+
+        <figcaption>
+            Normal readiness probe configuration using <code>/api/health</code>.
+        </figcaption>
+    </figure>
+
+
+    <h3>4.3 Deliberately failing the readiness probe</h3>
+
+    <p>
+        To test the readiness probe, I deliberately changed the readiness
+        endpoint from <code>/api/health</code> to
+        <code>/wrong-health</code>.
     </p>
 
     <p>
-        <a href="https://github.com/Mishomoon/cloud-services-week5" target="_blank">
-            https://github.com/Mishomoon/cloud-services-week5
+        The backend container continued running, but the pod became
+        <code>0/1</code> ready. The readiness probe received an HTTP
+        <code>404</code> response because the requested endpoint did
+        not exist.
+    </p>
+
+    <p>
+        This demonstrated that the Running status of a container and the
+        Ready status of a pod are not the same thing. The application can
+        continue running while OpenShift considers the pod not ready for
+        Service traffic.
+    </p>
+
+    <p>
+        During the failed readiness test, the new backend pod was not included
+        in the Service endpoints because it was not Ready. The previously
+        healthy backend pod could remain in the endpoints during the rolling
+        update, so traffic could continue to be served by the ready pod.
+    </p>
+
+    <figure>
+        <img src="screenshots-week6/backend-endpoint.png"
+             alt="Backend Service endpoint evidence">
+
+        <figcaption>
+            Backend Service endpoint evidence during the readiness test.
+        </figcaption>
+    </figure>
+
+
+    <h3>4.4 Recovery</h3>
+
+    <p>
+        After completing the test, I restored the readiness endpoint to
+        <code>/api/health</code>. The deployment then rolled out
+        successfully and the backend returned to the ready state.
+    </p>
+
+    <p>
+        This recovery confirmed that the readiness problem was caused by
+        the intentionally incorrect health-check path and that restoring
+        the correct endpoint allowed the backend to become ready again.
+    </p>
+
+    <figure>
+        <img src="screenshots-week6/Backend-recovered.png"
+             alt="Backend recovered after readiness probe fix">
+
+        <figcaption>
+            Backend recovered after fixing the readiness probe.
+        </figcaption>
+    </figure>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 5. LOGGING -->
+<!-- ========================================================= -->
+
+<section>
+
+    <h2>5. Part B - Backend Logging</h2>
+
+    <p>
+        The backend produces structured log entries containing information
+        about requests received by the application. The log entries include
+        the request path, HTTP method, HTTP status code and response time.
+    </p>
+
+    <p>
+        For example, the backend health endpoint produces successful
+        entries with HTTP status <code>200</code>. These logs can be used
+        to understand what requests are reaching the backend and how
+        quickly the application responds.
+    </p>
+
+    <p>
+        I retrieved the logs using the OpenShift <code>oc logs</code>
+        command. Because the health endpoint is checked regularly, the
+        output can become very long. I therefore used
+        <code>--tail=10</code> to display only the latest ten entries.
+    </p>
+
+    <pre><code>oc logs backend-c886df6cf-h4tzp -n cloud-services-week6 --tail=10</code></pre>
+
+    <figure>
+        <img src="screenshots-week6/week6-backend-logs-health-check.png"
+             alt="Backend logs retrieved with oc logs">
+
+        <figcaption>
+            Backend health-check logs retrieved with
+            <code>oc logs --tail=10</code>.
+        </figcaption>
+    </figure>
+
+
+    <h3>5.1 Alerting reflection</h3>
+
+    <p>
+        In a real production environment, an alert should not be created
+        for every successful health-check request. The backend may receive
+        many successful health checks, and sending an alert for every
+        successful request would create unnecessary noise.
+    </p>
+
+    <p>
+        A more useful alert could be triggered when the readiness or
+        liveness checks repeatedly fail, when the application starts
+        returning many HTTP 5xx errors, or when response times remain
+        above an agreed threshold for a period of time.
+    </p>
+
+    <p>
+        For a small student project, the alerting system could therefore
+        focus on a few important conditions instead of monitoring every
+        normal event. This would make the alerts easier to understand
+        and reduce unnecessary alert fatigue.
+    </p>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 6. PROBLEMS -->
+<!-- ========================================================= -->
+
+<section>
+
+    <h2>6. Problems Encountered and Solutions</h2>
+
+
+    <h3>6.1 GHCR image pull problem</h3>
+
+    <p>
+        The frontend initially used an incorrect GHCR image reference.
+        Because of this, the OpenShift pod could not pull the requested
+        image and entered the <code>ErrImagePull</code> and
+        <code>ImagePullBackOff</code> states.
+    </p>
+
+    <p>
+        I checked the deployment image reference and found that the
+        repository name was incorrect. I corrected the image reference
+        to the working GHCR repository. I also linked the GHCR pull
+        secret to the default ServiceAccount so that OpenShift could
+        authenticate when pulling the private image.
+    </p>
+
+    <p>
+        After updating the deployment and restarting it, the frontend
+        pod successfully started and became <code>1/1 Running</code>.
+        This showed the importance of using the correct image reference
+        and providing the required registry credentials.
+    </p>
+
+
+    <h3>6.2 Readiness probe problem</h3>
+
+    <p>
+        For the health-check exercise, I deliberately changed the backend
+        readiness endpoint from <code>/api/health</code> to
+        <code>/wrong-health</code>.
+    </p>
+
+    <p>
+        The container itself continued running, but the readiness probe
+        returned HTTP <code>404</code>. As a result, the new backend pod
+        became <code>0/1</code> ready.
+    </p>
+
+    <p>
+        I used <code>oc describe pod</code> to inspect the pod and confirm
+        that the readiness probe was failing. After restoring
+        <code>/api/health</code>, the deployment rolled out successfully
+        and the backend returned to the ready state.
+    </p>
+
+
+    <h3>6.3 Long log output</h3>
+
+    <p>
+        The backend health endpoint is checked regularly, so using
+        <code>oc logs</code> without limiting the output produced a long
+        list of health-check requests.
+    </p>
+
+    <p>
+        To make the evidence easier to read, I used
+        <code>oc logs --tail=10</code>. This displayed only the latest
+        ten entries while still showing the request path, HTTP status and
+        response time required for the logging part of the exercise. The
+        repeated <code>/api/health</code> entries are expected because the
+        health probes call that endpoint regularly.
+    </p>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 7. GITHUB + FINAL EVIDENCE -->
+<!-- ========================================================= -->
+
+<section>
+
+    <h2>7. GitHub Repository and Final Evidence</h2>
+
+    <p>
+        The complete Week 6 project is available in my GitHub repository.
+        The repository contains the application source code, container
+        configuration, OpenShift configuration and GitHub Actions workflow.
+    </p>
+
+    <p class="github-link">
+        <strong>GitHub repository:</strong><br>
+        <a href="https://github.com/Mishomoon/cloud-services-week6"
+           target="_blank">
+            https://github.com/Mishomoon/cloud-services-week6
         </a>
     </p>
 
+    <p>
+        The main evidence included in this documentation covers the
+        required Week 6 work:
+    </p>
+
+    <ul>
+        <li>Four Part A questions answered in full sentences.</li>
+        <li>GitHub Actions workflow for automated deployment, including the workflow YAML.</li>
+        <li>Successful GitHub Actions workflow run.</li>
+        <li>Backend container image deployment.</li>
+        <li>Liveness probe configuration.</li>
+        <li>Readiness probe configuration.</li>
+        <li>Deliberate readiness-probe failure.</li>
+        <li>Recovery after restoring the correct health endpoint.</li>
+        <li>Structured backend logging.</li>
+        <li>Logs retrieved using <code>oc logs</code>.</li>
+        <li>Reflection on useful alerts and alert fatigue.</li>
+        <li>Problems encountered and how they were solved, including the Rahti CPU limitation.</li>
+    </ul>
+
+   
 
 </section>
 
-<section>
-    <h2>7. Week 5 Application</h2>
 
-    <p>
-        The Week 5 application is available through the CSC Rahti Route:
-    </p>
-
-    <p>
-        <a href="https://frontend-cloud-services-week5.2.rahtiapp.fi/" target="_blank">
-            https://frontend-cloud-services-week5.2.rahtiapp.fi/
-        </a>
-    </p>
-</section>
+<!-- ========================================================= -->
+<!-- 8. CONCLUSION -->
+<!-- ========================================================= -->
 
 <section>
-    <h2>8. Cleanup</h2>
+
+    <h2>8. Conclusion</h2>
 
     <p>
-        The Rahti resources used for this assignment are temporary course
-        resources. After the peer-review period is finished, I will remove
-        the unnecessary resources or make the application private so that
-        unused public cloud resources are not left running.
-    </p>
-</section>
-
-<section>
-    <h2>9. Conclusion</h2>
-
-    <p>
-        In Week 5, I extended my Week 4 containerized application by adding
-        Redis as a separate cache component. I created a Redis Deployment
-        and Service, connected the Flask backend to the Redis Service,
-        added the Redis dependency and checked the resources in Rahti.
+        In Week 6, I moved the application from mainly manual deployment
+        towards a more automated CI/CD process. GitHub Actions builds the
+        backend container image, pushes it to GitHub Container Registry
+        and updates the backend Deployment in the Rahti/OpenShift
+        environment.
     </p>
 
     <p>
-        The hands-on work also showed that adding a cloud component requires
-        more than application code. The new component needs its own
-        Deployment, Service, configuration, networking and testing. I also
-        had to troubleshoot both an application-level Redis persistence
-        problem and a cluster-level CPU quota problem.
+        I also added and tested liveness and readiness probes. The
+        deliberate readiness-probe failure demonstrated that a container
+        can still be running while the pod is not ready to receive
+        traffic. After restoring the correct health endpoint, the
+        backend became ready again and the deployment completed
+        successfully.
     </p>
 
+   
+
     <p>
-        The Part A topics connect the hands-on work to wider cloud concepts.
-        YAML was directly used for the Kubernetes/OpenShift configuration,
-        while the security and reliability discussion helped me consider
-        how a Redis cache should be used in a real production environment.
+        Overall, the Week 6 work helped me understand how CI/CD
+        automation, health probes, logging and secure handling of
+        credentials can be combined when deploying a containerized
+        application to OpenShift.
     </p>
+
 </section>
 
 </main>
 
+
 <footer>
-    Cloud Services - Week 5
+    Cloud Services - Week 6 
 </footer>
 
 </body>
