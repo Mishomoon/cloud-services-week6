@@ -708,7 +708,7 @@ https://github.com/Mishomoon/cloud-services-week5
 
 Week 6
 
-The application was extended with CI/CD and observability.
+https://frontend-cloud-services-week6.2.rahtiapp.fi
 
 Repository:
 
