@@ -10,17 +10,19 @@ permissions:
   packages: write
 
 jobs:
-  build-and-deploy-backend:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set image name
+      - name: Set image names
         run: |
-          IMAGE_NAME=$(echo "ghcr.io/${GITHUB_REPOSITORY}/backend" | tr '[:upper:]' '[:lower:]')
-          echo "IMAGE_NAME=$IMAGE_NAME" >> "$GITHUB_ENV"
+          BACKEND_IMAGE=$(echo "ghcr.io/${GITHUB_REPOSITORY}/backend" | tr '[:upper:]' '[:lower:]')
+          FRONTEND_IMAGE=$(echo "ghcr.io/${GITHUB_REPOSITORY}/frontend" | tr '[:upper:]' '[:lower:]')
+          echo "BACKEND_IMAGE=$BACKEND_IMAGE" >> "$GITHUB_ENV"
+          echo "FRONTEND_IMAGE=$FRONTEND_IMAGE" >> "$GITHUB_ENV"
 
       - name: Log in to GHCR
         run: |
@@ -28,11 +30,19 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -t "$IMAGE_NAME:${GITHUB_SHA}" ./backend
+          docker build -t "$BACKEND_IMAGE:${GITHUB_SHA}" ./backend
 
       - name: Push backend image
         run: |
-          docker push "$IMAGE_NAME:${GITHUB_SHA}"
+          docker push "$BACKEND_IMAGE:${GITHUB_SHA}"
+
+      - name: Build frontend image
+        run: |
+          docker build -t "$FRONTEND_IMAGE:${GITHUB_SHA}" ./frontend
+
+      - name: Push frontend image
+        run: |
+          docker push "$FRONTEND_IMAGE:${GITHUB_SHA}"
 
       - name: Install OpenShift CLI
         uses: redhat-actions/oc-installer@v1
@@ -44,18 +54,23 @@ jobs:
       - name: Select Week 6 project
         run: |
           oc project cloud-services-week6
-      - name: Free CPU for backend rollout
+
+      - name: Free CPU for deployment
         run: |
           oc scale deployment/frontend --replicas=0 -n cloud-services-week6
           oc rollout status deployment/frontend -n cloud-services-week6 --timeout=120s
 
       - name: Deploy backend
         run: |
-          oc set image deployment/backend backend="$IMAGE_NAME:${GITHUB_SHA}" -n cloud-services-week6
+          oc set image deployment/backend backend="$BACKEND_IMAGE:${GITHUB_SHA}" -n cloud-services-week6
 
       - name: Wait for backend deployment
         run: |
           oc rollout status deployment/backend -n cloud-services-week6 --timeout=180s
+
+      - name: Deploy frontend
+        run: |
+          oc set image deployment/frontend frontend="$FRONTEND_IMAGE:${GITHUB_SHA}" -n cloud-services-week6
 
       - name: Restore frontend
         if: always()
